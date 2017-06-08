@@ -1,6 +1,6 @@
 import java.util.Calendar;
 
-public class Clientes {
+public class Clientes implements Comparable <Clientes> {
 
 	private int numeroDocumento;
 	private String apellido;
@@ -48,6 +48,20 @@ public class Clientes {
 	
 	public void setFechaNacimiento(Calendar fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+	
+	@Override
+	public boolean equals(Object cliente) {
+	
+		return this.numeroDocumento == (int)((Clientes) cliente).getNumeroDocumento();				
+				
+	}
+
+	@Override
+	public int compareTo(Clientes cliente) {
+
+		return this.apellido.compareTo(cliente.getApellido());
+		
 	}
 	
 }
