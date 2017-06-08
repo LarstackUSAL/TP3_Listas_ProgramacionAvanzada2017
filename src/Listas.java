@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -15,9 +17,9 @@ public class Listas {
 		this.intList = new ArrayList <Integer> (size);
 		this.clientesList = clientesList;
 		
-		for(int i = 0; i < intList.size(); ++i) {
+		for(int i = 0; i < size; ++i) {
 			
-			intList.add(Validador.generarEnteroRandom(Main.RANDOM_MIN, Main.MAXIMO_ENTEROS));
+			intList.add(Validador.generarEnteroRandom(100, 999));
 			
 		}
 			
@@ -43,8 +45,8 @@ public class Listas {
 
 		if(clientesList.contains(cliente)) 
 			return clientesList.remove(cliente);
-		else 
-			throw new ObjetoInexistenteException();
+		
+		throw new ObjetoInexistenteException();
 
 	}
 	
@@ -70,7 +72,7 @@ public class Listas {
 			
 			int frequencia = Collections.frequency(clientesList, cliente);
 			
-			if(frequencia > 0)
+			if(frequencia > 1)
 				return true;
 						
 		}
@@ -111,24 +113,77 @@ public class Listas {
 		
 	}
 	
-	public static void mostrarIntArray(ArrayList <Integer> intArray) {
+	public ArrayList<String> getIntArrayStringList(ArrayList<Integer> intList) {
 		
-		for (Integer i : intArray) 
-			System.out.println(i + " ");
+		Iterator<Integer> intListIterator = intList.iterator();
+		ArrayList<String> intArrayStringList = new ArrayList<String>();
 		
+		while (intListIterator.hasNext()) {
+			
+			intArrayStringList.add(String.valueOf(intListIterator.next()));
+		}
+		
+		return intArrayStringList;
 	}
 	
-	public static void mostrarClientesArray(ArrayList <Clientes> clienteArray) {
+	public ArrayList<String> getClientesArrayStringList(ArrayList<Clientes> clientesList) {
 		
-		for (Clientes i : clienteArray) {
+		Iterator<Clientes> clientesListIterator = clientesList.iterator();
+		ArrayList<String> clientesArrayStringList = new ArrayList<String>();
+
+		while (clientesListIterator.hasNext()) {
 			
-			System.out.print("Nro. Documento: " + i.getNumeroDocumento() + " ");
-			System.out.print("Apellido y Nombre: " + i.getApellido() + ", " + i.getNombre() + " ");
-			System.out.print("Fecha Nacimiento: " + Validador.calendarToString(i.getFechaNacimiento(), "dd/MM/yyyy") + " ");
-			System.out.println();
-		
+			Clientes clienteIt = clientesListIterator.next();
+			
+			clientesArrayStringList.add("Nro. Documento: " + clienteIt.getNumeroDocumento() + " " +
+			"Apellido y Nombre: " + clienteIt.getApellido() + ", " + clienteIt.getNombre() + " " +
+			"Fecha Nacimiento: " + Validador.calendarToString(clienteIt.getFechaNacimiento(), "dd/MM/yyyy"));
 		}
-				
+		
+		return clientesArrayStringList;
 	}
+
+	public void printClientesArray(ArrayList<Clientes> clientesList, PrintStream archivoSalida, PrintStream pantalla) {
+		
+		System.setOut(archivoSalida);
+		System.out.println();
+		System.out.println("Array de clientes: ");
+		ArrayList<String> clientesArrayStringList = this.getClientesArrayStringList(clientesList);
+		
+		for (String cliente : clientesArrayStringList) {
+			
+			System.out.println(cliente) ;
+		}
+		
+		System.setOut(pantalla);
+		System.out.println();
+		System.out.println("Array de clientes: ");
+		
+		for (String cliente : clientesArrayStringList) {
+			
+			System.out.println(cliente) ;
+		}
+	}
+
+	public void printIntArray(ArrayList<Integer> intList, PrintStream archivoSalida, PrintStream pantalla) {
+		
+		System.setOut(archivoSalida);
+		System.out.print("Array de enteros: ");
+		ArrayList<String> intArrayStringList = this.getIntArrayStringList(intList);
+		
+		for (String entero : intArrayStringList) {
+			
+			System.out.print(entero + " ") ;
+		}
+		
+		System.setOut(pantalla);
+		System.out.print("Array de enteros: ");
+		
+		for (String entero : intArrayStringList) {
+			
+			System.out.print(entero + " ") ;
+		}
+	}
+	
 	
 }
